@@ -1,5 +1,6 @@
 ---
 title: Bringing GraphQL Concepts to REST
+layout: post
 ---
 
 With GraphQL in vogue and traditional REST apis feeling like antiquated technology, I started thinking of ways REST could catch up to the tooling, convenience, and rapid prototyping offered by GraphQL and its associated frameworks. I'm familiar with [Introspected REST](https://introspected.rest), but find that it fundamentally changes the way most folks interact with a REST API. I believe we can develop a solution that allows us to keep the workflow but eliminate the rigidity. First, I'd like to describe what I see as the major strengths of GraphQL with the intention of bringing them to REST framework.
