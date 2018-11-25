@@ -12,6 +12,14 @@ layout: default
 
 <p>I quit most social media in 2016, with the exception of Instagram. After reading Deep Work in 2018, I ditched Instagram as well. I'm on <a href="https://www.linkedin.com/in/chuck-callebs-9b13276/">LinkedIn</a> although I rarely check it. I do love <a href="https://github.com/ccallebs">GitHub</a>.</p>
 
+<h3>Posts</h3>
+
+<ul>
+    {% for post in site.posts %}
+        <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% endfor %}
+</ul>
+
 <h3>Creations</h3>
 
 <ul>
