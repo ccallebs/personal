@@ -3,7 +3,9 @@ title: Bringing GraphQL Concepts to REST
 layout: post
 ---
 
-With GraphQL in vogue and traditional REST APIs feeling like antiquated technology, I started thinking of ways REST could catch up to the tooling, convenience, and rapid prototyping offered by GraphQL and its associated frameworks. I appreciate [Introspected REST](https://introspected.rest) and the issues it sets out to solve, but I chose to go a different path for a couple of reasons:
+<em>Last updated: 11/26/2018</em>
+
+With GraphQL in vogue and traditional REST APIs feeling like antiquated technology, I started thinking of ways REST could catch up to the tooling, convenience, and rapid prototyping offered by GraphQL and its associated frameworks. I appreciate [Introspected REST](https://introspected.rest) and the issues it sets out to solve, but I chose to explore a different path for a couple of reasons:
 - I think our endpoints should be predictable and we shouldn't need to query metadata to figure out endpoint behavior.
 - I don't think we should bring resolvers to REST, which is what I understand Introspected REST is trying to do.
 
@@ -43,7 +45,7 @@ From my admittedly limited experience with GraphQL, comprehensive schema explora
 This seems like the easiest problem to address as long as we explicitly define the shape of our data in the API creation process. Using the models defined above, we could build our framework to have a `/schema` endpoint that accepted GET requests. Depending on the content-type, we could return a generated webpage with the associated schema information or a JSON representation of the same.
 
 ## Dynamic Return Data
-One of the major boons to GraphQL is the ability to treat your queries like a buffet line, choosing which attributes you’d like from each model while ignoring the unimportant details. This comes at a cost for GraphQL -- all API requests must be made using the POST method and HTTP caching becomes impossible as a result.
+One of the major advantages of GraphQL is the ability to treat your queries like a buffet line, choosing which attributes you’d like from each model while ignoring the unimportant details. This comes at a cost for GraphQL -- all API requests must be made using the POST method and HTTP caching becomes impossible as a result.
 
 I believe dynamic return data would be possible with REST if we slightly modified the way we think of an API. Instead of static resources, we could provide the building blocks necessary to create ad-hoc queries at will. Unlike GraphQL, it would require two requests to compose the initial query. But also unlike GraphQL, the endpoints would be cacheable and the developer experience would be nearly as good.
 
@@ -51,7 +53,7 @@ Let’s pretend our framework also has a `/shapes` endpoint accepts POST request
 
 <pre>
 {
-  'shape_key': 'user_with_comments',
+  'key': 'user_with_comments',
   'model': 'User',
   'fields': ['id', 'name', 'email'],
   'includes': [
@@ -75,7 +77,7 @@ Now, we could access this data at the `/shapes/user_with_comments` endpoint. If 
   ]
 }
 </pre>
-Additionally, this shape would automatically be added to the `/schema` information.
+Additionally, this shape would automatically be added to the generated `/schema` information.
 
 ## Automatic Schema Updates
 In the [Prisma](https://www.prisma.io/) framework, an engineer only has to modify their schema and the server will automatically update the data store. The migrations will run and unless there’s a destructive action, no further participation is necessary by the engineer. For destructive actions, the participation is only slightly [more involved](https://www.prisma.io/docs/data-model-and-migrations/migrations-asdf/). Here's an example of a column rename:
@@ -93,6 +95,6 @@ I'm on the fence with how I feel about this. On one hand, this is a very slick w
 
 Good question.
 
-I have a rather selfish interest in building a framework offering the above. I love Ruby. I don't think there's a better language for programmer happiness. It's a joy to write and _usually_ a joy to read. RSpec/MiniTest are fantastic and are rivaled by very few competitors (Elixir/Clojure come to mind). However, I can see the writing on the wall. JavaScript has a vibrant tooling/framework ecosystem while Ruby's maturity has slowed down the number of "big swings". We're content and complacent as Ruby developers. Ruby (and Rails) was at one time the best language to "get shit done." I'm not sure if that's true anymore.
+I have a rather selfish interest in building a framework offering the above. Simply put, I love Ruby and I don't think there's a better language for programmer happiness. It's a joy to write and _usually_ a joy to read. The testing ecosystem has only a handful of rivals (Elixir/Clojure come to mind). However, I can see the writing on the wall. JavaScript has a vibrant tooling/framework ecosystem. We're content and complacent as Ruby developers. Our tools work great, which has prevented us (or me, at least) from continually asking what could be better. Although you can still get a _ton_ done with Ruby (and specifically Rails), I'm not sure we're the fastest gun in the west anymore.
 
-I think something like the above could be a **major** boon to Ruby adoption and could remind folks of the kind of things Ruby is capable of on the server. So with that said, I'll be trying to build it!
+I think something to comparable to Prisma / AppSync would be **major** boon to Ruby adoption. It could remind folks about the kind of things Ruby is capable of on the server. Who wants to help me build it?
