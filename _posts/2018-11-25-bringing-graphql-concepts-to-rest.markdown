@@ -5,7 +5,7 @@ layout: post
 
 <em>Last updated: 11/29/2018</em>
 
-Well, it's 2018 and GraphQL has solidifed itself as the premiere method handling client-side data. When looking at the tooling, convenience, and rapid protyping that Facebook's query language promotes, it's easy to assume that traditional REST APIs are headed the way of the condor. I mean, check out [this StackOverflow question](https://stackoverflow.com/questions/15056878/rest-vs-json-rpc) that originally asked for advice for choosing between REST and JSON-RPC:
+Well, it's 2018 and GraphQL has solidifed itself as the premiere method for handling client-side data. When looking at the tooling, convenience, and rapid protyping that Facebook's query language promotes, it's easy to assume that traditional REST APIs are headed the way of the condor. I mean, check out [this StackOverflow question](https://stackoverflow.com/questions/15056878/rest-vs-json-rpc) that originally asked for advice for choosing between REST and JSON-RPC:
 
 > Update 2018: GraphQL offer several advantages over traditional options, specifically it obviates the need to manually normalize, denormalize and cache data between server and client, also it aggregates API calls from UI components without creating a singleton client state which allows developers to build UI components independently and in parallel.
 
