@@ -85,7 +85,11 @@ Now, we could access this data at the `/shapes/user_with_comments` endpoint. If 
   ]
 }
 </pre>
-Additionally, this shape would automatically be added to the generated `/schema` information.
+So, what does this buy us? A few things, actually:
+
+- We're only returning the data that we need.
+- We can now **cache the data at the request layer**, something GraphQL cannot do.
+- Because we're storing the shape of this endpoint, we can automatically add it to our API documentation at `/schema`.
 
 ## Automatic Schema Updates
 In the [Prisma](https://www.prisma.io/) framework, an engineer only has to modify their schema and the server will automatically update the data store. The migrations will run and unless there’s a destructive action, no further participation is necessary by the engineer. For destructive actions, the participation is only slightly [more involved](https://www.prisma.io/docs/data-model-and-migrations/migrations-asdf/). Here's an example of a column rename:
