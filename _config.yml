@@ -24,6 +24,11 @@ permalink: /:year/:title
 
 # Build settings
 markdown: kramdown
+
+kramdown:
+  input: GFM
+  hard_wrap: false
+
 theme: minima
 plugins:
   - jekyll-feed

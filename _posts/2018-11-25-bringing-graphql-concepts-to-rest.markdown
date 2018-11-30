@@ -21,7 +21,7 @@ I'm sure we can develop a framework that allows us to keep the REST paradigm we'
 
 The GraphQL type system provides a simple way to ensure data integrity and offers context to the shape of your return objects. We want our ideal REST framework to warn us when we're passing a string to an integer field. We want "compile" errors when we try to return a User object for a Comment attribute. And ideally we would like the power to define [union types](https://graphql.org/learn/schema/#union-types) to keep our data flexible yet typesafe. Above all, we want the schema to be easy to define and not get in the way any more than necessary. Let's give it a shot:
 
-<pre>
+``` ruby
 class User
   include Schema::Model
 
@@ -40,7 +40,7 @@ class Comment
 
   belongs_to :author, class: User, foreign_key :user_id
 end
-</pre>
+```
 
 As you can see, I'm simply picturing a more explicit ActiveRecord. With the added type information, we can provide schema data to consumers while also generating the associated migrations automatically.
 
@@ -59,32 +59,34 @@ I believe dynamic return data would be possible with REST if we slightly modifie
 
 Let’s pretend our framework also has a `/shapes` endpoint accepts POST requests. We could create a named shape at will:
 
-<pre>
+``` json
 {
-  'key': 'user_with_comments',
-  'model': 'User',
-  'fields': ['id', 'name', 'email'],
-  'includes': [
-    { 'model': 'Comments', 'fields': ['text', 'score'] }
+  "key": "user_with_comments",
+  "model": "User",
+  "fields": ["id", "name", "email"],
+  "includes": [
+    { "model": "Comments", "fields": ["text", "score"] }
   ]
 }
-</pre>
+```
+
 Now, we could access this data at the `/shapes/user_with_comments` endpoint. If we were to perform a standard GET request, it could return the following:
 
-<pre>
+``` json
 {
   [
     {
-      'id': 1,
-      'name': 'Chuck Callebs',
-      'email': 'chuck@callebs.io',
-      'comments': [
-        { 'text': 'Great data shape!', 'score': 1000 },
+      "id": 1,
+      "name": "Chuck Callebs",
+      "email": "chuck@callebs.io",
+      "comments": [
+        { "text": "Great data shape!", "score": 1000 }
       ]
     }
   ]
 }
-</pre>
+```
+
 So, what does this buy us? A few things, actually:
 
 - We're only returning the data that we need.
@@ -94,11 +96,12 @@ So, what does this buy us? A few things, actually:
 ## Automatic Schema Updates
 In the [Prisma](https://www.prisma.io/) framework, an engineer only has to modify their schema and the server will automatically update the data store. The migrations will run and unless there’s a destructive action, no further participation is necessary by the engineer. For destructive actions, the participation is only slightly [more involved](https://www.prisma.io/docs/data-model-and-migrations/migrations-asdf/). Here's an example of a column rename:
 
-<pre>
+``` graphql
 type Story {
   content: String @rename(oldName: "text")
 }
-</pre>
+```
+
 Then after the deploy, it's up to the engineer to remove the `@rename` annotation manually.
 
 I'm on the fence with how I feel about this. On one hand, this is a very slick way of handling simple migrations/schema changes. On the other, this approach drastically lowers the barrier for accidental data loss. I think some sort of middle ground exists. We could create a framework that automatically generated the migrations, but would require an affirmative nod from the engineer that everything was good. This middle ground also eliminates some of the "magic" associated with the Prisma approach.
