@@ -3,13 +3,19 @@ title: Bringing GraphQL Concepts to REST
 layout: post
 ---
 
-<em>Last updated: 11/26/2018</em>
+<em>Last updated: 11/29/2018</em>
 
-With GraphQL in vogue and traditional REST APIs feeling like antiquated technology, I started thinking of ways REST could catch up to the tooling, convenience, and rapid prototyping offered by GraphQL and its associated frameworks. I appreciate [Introspected REST](https://introspected.rest) and the issues it sets out to solve, but I chose to explore a different path for a couple of reasons:
+Well, it's 2018 and GraphQL has solidifed itself as the premiere method handling client-side data. When looking at the tooling, convenience, and rapid protyping that Facebook's query language promotes, it's easy to assume that traditional REST APIs are headed the way of the condor. I mean, check out [this StackOverflow question](https://stackoverflow.com/questions/15056878/rest-vs-json-rpc) that originally asked for advice for choosing between REST and JSON-RPC:
+
+> Update 2018: GraphQL offer several advantages over traditional options, specifically it obviates the need to manually normalize, denormalize and cache data between server and client, also it aggregates API calls from UI components without creating a singleton client state which allows developers to build UI components independently and in parallel.
+
+REST is dead, right?
+
+I hope not. REST is a really straightforward way of interacting with a webserver without adding any additional abstractions. It would be a shame if we stopped innovating around it because a new, cooler kid moved to school. With that in mind, I started thinking of the ways REST could try and catch up to the features offered by GraphQL and it's associated ecosystem. Along the way, and I encountered [Introspected REST](https://introspected.rest) and agreed with the issues that it sets out to solve. However, Introspected REST doesn't scratch my particular itch, for a couple of reasons:
 - I think our endpoints should be predictable and we shouldn't need to query metadata to figure out endpoint behavior.
-- I don't think we should bring resolvers to REST, which is what I understand Introspected REST is trying to do.
+- I don't think GraphQL's resolvers are the main thing we need to bring to REST, which is what I understand Introspected REST is trying to do.
 
-I believe we can develop a framework that allows us to keep a standard REST paradigm but eliminate the rigidity. There are a number of great aspects of GraphQL that I think we can bring along with small modifications and very little engineering overhead.
+I'm sure we can develop a framework that allows us to keep the REST paradigm we're used to but eliminate the rigidity. There are a number of great aspects of GraphQL that I think we can bring along with small modifications and very little engineering overhead. Let's explore a few.
 
 ## Strong Type Support
 
@@ -44,8 +50,10 @@ From my admittedly limited experience with GraphQL, comprehensive schema explora
 
 This seems like the easiest problem to address as long as we explicitly define the shape of our data in the API creation process. Using the models defined above, we could build our framework to have a `/schema` endpoint that accepted GET requests. Depending on the content-type, we could return a generated webpage with the associated schema information or a JSON representation of the same.
 
+It would even be trivial to add permissions-based documentation based on the user currently logged in!
+
 ## Dynamic Return Data
-One of the major advantages of GraphQL is the ability to treat your queries like a buffet line, choosing which attributes you’d like from each model while ignoring the unimportant details. This comes at a cost for GraphQL -- all API requests must be made using the POST method and HTTP caching becomes impossible as a result.
+Another one of the major advantages of GraphQL is the ability to treat your queries like a buffet line, choosing which attributes you’d like from each model while ignoring the unimportant details. This comes at a cost for GraphQL -- all API requests must be made using the POST method and HTTP caching becomes impossible as a result.
 
 I believe dynamic return data would be possible with REST if we slightly modified the way we think of an API. Instead of static resources, we could provide the building blocks necessary to create ad-hoc queries at will. Unlike GraphQL, it would require two requests to compose the initial query. But also unlike GraphQL, the endpoints would be cacheable and the developer experience would be nearly as good.
 
@@ -95,6 +103,4 @@ I'm on the fence with how I feel about this. On one hand, this is a very slick w
 
 Good question.
 
-I have a rather selfish interest in building a framework offering the above. Simply put, I love Ruby and I don't think there's a better language for programmer happiness. It's a joy to write and _usually_ a joy to read. The testing ecosystem has only a handful of rivals (Elixir/Clojure come to mind). However, I can see the writing on the wall. JavaScript has a vibrant tooling/framework ecosystem. We're content and complacent as Ruby developers. Our tools work great, which has prevented us (or me, at least) from continually asking what could be better. Although you can still get a _ton_ done with Ruby (and specifically Rails), I'm not sure we're the fastest gun in the west anymore.
-
-I think something to comparable to Prisma / AppSync would be **major** boon to Ruby adoption. It could remind folks about the kind of things Ruby is capable of on the server. Who wants to help me build it?
+Plainly put, I don't really think it's necessary. I think what folks needed to do all along was explcitly design their schema and build tooling around it. I think this would be fairly easy to do in Ruby, and it sounds like good challenge and side project. So, who wants to help me build it?
